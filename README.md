@@ -41,10 +41,9 @@ python scripts/main.py +experiment=knapsack_ppo
 
 To run Knapsack with evolution strategies using AdamW:
 
-'''bash
-#ADAMW
+```bash
 !python scripts/main.py +experiment=knapsack_es training.n_epochs=200 training.batch_size=500 training.optimizer=adamw
-'''
+```
 
 ### 🔸 Custom Configuration Using Hydra Overrides
 
@@ -78,8 +77,7 @@ python scripts/eval.py +experiment=knapsack_ppo
 To evaluate Knapsack with evolution strategies using AdamW:
 '''bash
 !python scripts/eval.py +experiment=knapsack_es
-!python scripts/print_results.py +experiment=knapsack_es
-'''
+```
 
 This performs evaluation across multiple:
 - SA step sizes (`sa.outer_steps`)
@@ -101,9 +99,9 @@ After evaluation, print and compare results using:
 python scripts/print_results.py +experiment=knapsack_ppo
 ```
 
-'''bash
+```bash
 !python scripts/print_results.py +experiment=knapsack_es
-'''
+```
 
 This script summarizes results from multiple runs and outputs comparative tables.
 
