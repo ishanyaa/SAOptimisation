@@ -1,17 +1,116 @@
-# Neural Simulated Annealing
-This repository will contain the implementation for the paper
+# Neural Simulated Annealing (Neural SA)
 
-**Alvaro H.C. Correia<sup>\*1</sup>, Daniel E. Worrall<sup>\*2</sup>, Roberto Bondesan<sup>2</sup> "Neural Simulated Annealing".** [[ArXiv]](https://arxiv.org/abs/2203.02201)
+This repository is a detailed implementation of the Neural Simulated Annealing (Neural SA) framework as proposed in the paper **"Neural Simulated Annealing"** by Correia et al., presented at AISTATS 2023. This framework is designed for solving combinatorial optimization problems, such as the Knapsack problem, using techniques like Proximal Policy Optimization (PPO) and Simulated Annealing (SA).
 
-*Equal contribution
+---
 
-<sup>1</sup> Eindhoven University of Technology, Eindhoven, The Netherlands (Work done during internship at Qualcomm AI Research).
+## 🧰 Requirements and Setup
 
-<sup>2</sup> Qualcomm AI Research, Qualcomm Technologies Netherlands B.V. (Qualcomm AI Research is an initiative of Qualcomm Technologies, Inc.).
+- **Python version**: `Python 3.11` is required.
+- Install all dependencies using:
 
- ## Reference
-If you find our work useful, please cite
+```bash
+pip install -r requirements.txt
 ```
+
+---
+
+## 🛠 Directory Structure (Important Folders)
+
+- `scripts/`: Contains the main training, evaluation, and result printing scripts.
+- `scripts/conf/experiment/`: YAML configuration files for each experiment.
+- `neuralsa/`: Core implementation of Neural SA, PPO, and configuration management.
+- `outputs/models/`: Stores trained model checkpoints.
+- `outputs/results/`: Stores evaluation results and logs.
+
+---
+
+## 🧪 How to Train (or Retrain) Models
+
+Run the main script with the desired experiment configuration:
+
+```bash
+python scripts/main.py +experiment=<config_file>
+```
+
+### 🔹 Example (Knapsack using PPO)
+
+```bash
+python scripts/main.py +experiment=knapsack_ppo
+```
+
+### 🔸 Custom Configuration Using Hydra Overrides
+
+You can modify variables inline without creating a new config file:
+
+```bash
+python scripts/main.py +experiment=knapsack_ppo ++problem_dim=100 ++sa.outer_steps=500
+```
+
+- Use `sa.` prefix for parameters from `SAConfig`
+- Use `training.` prefix for parameters from `TrainingConfig`
+
+#### 🔄 Model Output Location
+
+Models are saved at:
+
+```
+outputs/models/<problem><problem_dim>-<training.method>
+```
+
+---
+
+## 📊 Evaluation of Models
+
+Evaluate trained models with the same setting used in the paper:
+
+```bash
+python scripts/eval.py +experiment=knapsack_ppo
+```
+
+This performs evaluation across multiple:
+- SA step sizes (`sa.outer_steps`)
+- Methods: PPO, vanilla SA, Greedy SA
+
+### 🗂 Results Output
+
+```
+outputs/results/<problem>
+```
+
+---
+
+## 📈 Print and Aggregate Results
+
+After evaluation, print and compare results using:
+
+```bash
+python scripts/print_results.py +experiment=knapsack_ppo
+```
+
+This script summarizes results from multiple runs and outputs comparative tables.
+
+---
+
+## 🧾 YAML Configuration Files
+
+You can find the default experiment configurations in:
+
+```
+scripts/conf/experiment/
+```
+
+Each YAML file follows the format `<problem>_<method>.yaml`, e.g.:
+- `knapsack_ppo.yaml`
+- `knapsack_es.yaml`
+
+---
+
+## 🧠 Reference
+
+If you find our work or this implementation useful, please cite:
+
+```bibtex
 @inproceedings{correia2023neural,
   title={Neural simulated annealing},
   author={Correia, Alvaro HC and Worrall, Daniel E and Bondesan, Roberto},
@@ -22,59 +121,26 @@ If you find our work useful, please cite
 }
 ```
 
-## How to install
+---
 
-Make sure to have Python ≥3.10 (tested with Python 3.10.11) and 
-ensure the latest version of `pip` (tested with 22.3.1):
-```bash
-pip install --upgrade --no-deps pip
-```
+## 👥 Credits and Acknowledgements
 
-Next, install PyTorch 1.13.0 with the appropriate CUDA version (tested with CUDA 11.7):
-```bash
-python -m pip install torch==1.13.0+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
-```
+This implementation and documentation were prepared by:
 
-Finally, install the remaining dependencies using pip:
-```bash
-pip install -r requirements.txt
-```
+- **Ishanya** (21329)
+- **Hari Krishna** (22236)
+- **Hiba** (22146)
+- **Astha** (22063)
 
-To run the code, the project root directory needs to be added to your PYTHONPATH:
-```bash
-export PYTHONPATH="${PYTHONPATH}:$PWD"
-```
+Special thanks to the original authors of the Neural SA framework and Hydra configuration library.
 
-## Running experiments
-### Training
-The main run file to reproduce all experiments is `main.py`. We use [Hydra](https://hydra.cc/) to configure experiments, so you can retrain our Neural SA models as follows
-```bash
-python scripts/main.py +experiment=<config_file>
-```
-where <config_file> is a yaml file defining the experiment configuration. The experiments in the paper are configured via the config files in the `scripts/conf/experiment` folder, which are named as `<problem>_<method>.yaml`. For instance, to train a Knapsack model using PPO with the configuration used in the paper you should run
-```bash
-python scripts/main.py +experiment=knapsack_ppo
-```
+---
 
-To experiment with different configurations, you can either create a new yaml file and use it on the command line as above, or you can change specific variables with [Hydra's override syntax](https://hydra.cc/docs/advanced/override_grammar/basic/). As an example, if you want to keep the same configuration of the Knapsack experiments with PPO but train with problems of size 100 and for 500 steps, you can do so as follows
+## ✏️ Notes for Developers
 
-```bash
-python scripts/main.py +experiment=knapsack_ppo ++problem_dim=100 ++sa.outer_steps=500
-```
+- You are encouraged to add or modify YAML files in `scripts/conf/experiment/` to explore new configurations.
+- Feel free to tune hyperparameters via command-line overrides.
+- Always verify the Python version compatibility (tested on Python 3.11).
 
-See neuralsa/config.py for an overview of the different configuration variables. Note that for parameters in the SAConfig class you need to prepend its name with "sa" (as in the example above), and for the TrainingConfig class you need to prepend the parameter name with "training".
+---
 
-The trained model is saved in `outputs/models/<problem><problem_dim>-<training.method>`.
-
-### Evaluation
-Evaluation with the same settings used in the paper can be done with `eval.py` script. As before, this can be configured with Hydra, for instance:
-
-```bash
-python scripts/eval.py +experiment=knapsack_ppo
-```
-
-The `eval.py` script already sweeps over the different number of steps (`sa.outer_steps`) considered in paper. It also runs vanilla Simulated Annealing and a greedy variant of Neural SA. The results are stored in `outputs/results/<problem>` folder, and can be aggregated and printed with the `print_results.py` script:
-
-```bash
-python scripts/print_results.py +experiment=knapsack_ppo
-```
