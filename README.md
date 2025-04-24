@@ -40,6 +40,7 @@ python scripts/main.py +experiment=knapsack_ppo
 ```
 
 To run Knapsack with evolution strategies using AdamW:
+
 '''bash
 #ADAMW
 !python scripts/main.py +experiment=knapsack_es training.n_epochs=200 training.batch_size=500 training.optimizer=adamw
