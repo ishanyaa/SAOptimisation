@@ -60,11 +60,10 @@ python scripts/main.py +experiment=knapsack_ppo ++problem_dim=100 ++sa.outer_ste
 
 Models are saved at:
 
-```
+```bash
 outputs/models/<problem><problem_dim>-<training.method>
 ```
 
----
 
 ## 📊 Evaluation of Models
 
