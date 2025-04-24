@@ -39,6 +39,12 @@ python scripts/main.py +experiment=<config_file>
 python scripts/main.py +experiment=knapsack_ppo
 ```
 
+To run Knapsack with evolution strategies using AdamW:
+'''bash
+#ADAMW
+!python scripts/main.py +experiment=knapsack_es training.n_epochs=200 training.batch_size=500 training.optimizer=adamw
+'''
+
 ### 🔸 Custom Configuration Using Hydra Overrides
 
 You can modify variables inline without creating a new config file:
@@ -68,6 +74,12 @@ Evaluate trained models with the same setting used in the paper:
 python scripts/eval.py +experiment=knapsack_ppo
 ```
 
+To evaluate Knapsack with evolution strategies using AdamW:
+'''bash
+!python scripts/eval.py +experiment=knapsack_es
+!python scripts/print_results.py +experiment=knapsack_es
+'''
+
 This performs evaluation across multiple:
 - SA step sizes (`sa.outer_steps`)
 - Methods: PPO, vanilla SA, Greedy SA
@@ -87,6 +99,10 @@ After evaluation, print and compare results using:
 ```bash
 python scripts/print_results.py +experiment=knapsack_ppo
 ```
+
+'''bash
+!python scripts/print_results.py +experiment=knapsack_es
+'''
 
 This script summarizes results from multiple runs and outputs comparative tables.
 
@@ -108,7 +124,7 @@ Each YAML file follows the format `<problem>_<method>.yaml`, e.g.:
 
 ## 🧠 Reference
 
-If you find our work or this implementation useful, please cite:
+If you want to find the original work and implementation, please check the below:
 
 ```bibtex
 @inproceedings{correia2023neural,
@@ -141,6 +157,7 @@ Special thanks to the original authors of the Neural SA framework and Hydra conf
 - You are encouraged to add or modify YAML files in `scripts/conf/experiment/` to explore new configurations.
 - Feel free to tune hyperparameters via command-line overrides.
 - Always verify the Python version compatibility (tested on Python 3.11).
+- The ES optimiser results were logged into a csv and plotted separately.
 
 ---
 
