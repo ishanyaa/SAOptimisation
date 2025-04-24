@@ -74,7 +74,8 @@ python scripts/eval.py +experiment=knapsack_ppo
 ```
 
 To evaluate Knapsack with evolution strategies using AdamW:
-'''bash
+
+```bash
 !python scripts/eval.py +experiment=knapsack_es
 ```
 
@@ -84,11 +85,10 @@ This performs evaluation across multiple:
 
 ### 🗂 Results Output
 
-```
+```bash
 outputs/results/<problem>
 ```
 
----
 
 ## 📈 Print and Aggregate Results
 
