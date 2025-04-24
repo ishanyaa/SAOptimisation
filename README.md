@@ -114,6 +114,11 @@ A simplified Google Colab notebook is available for a quick overview of how this
 
 [🔍 Colab Link (Overview Only)](https://colab.research.google.com/drive/1vAUU-Knoa-4_4CSGv2wueuLIU5W1Q-Bt?usp=sharing)
 
+Similarly for ES implementation:
+[🔍 Colab Link (Overview Only)](https://colab.research.google.com/drive/1W9gWiEkobaNdNaPpGKCSogdQOam6rKu6?usp=sharing)
+For ES plots
+[🔍 Colab Link (Overview Only)](https://colab.research.google.com/drive/1NWeFHrjJ3mfzgUds3D_IKVV_QZ2m_AAV?usp=sharing).
+
 Note: This Colab notebook does not include the entire implementation and is meant only for reference and demonstration purposes.
 
 ## 🧾 YAML Configuration Files
