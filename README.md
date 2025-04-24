@@ -33,10 +33,11 @@ Run the main script with the desired experiment configuration:
 python scripts/main.py +experiment=<config_file>
 ```
 
-### 🔹 Example (Knapsack using PPO)
+### 🔹 Example (Knapsack using PPO,es)
 
 ```bash
 python scripts/main.py +experiment=knapsack_ppo
+python scripts/main.py +experiment=knapsack_es
 ```
 
 To run Knapsack with evolution strategies using AdamW:
@@ -47,10 +48,11 @@ To run Knapsack with evolution strategies using AdamW:
 
 ### 🔸 Custom Configuration Using Hydra Overrides
 
-You can modify variables inline without creating a new config file:
+You can modify variables inline without creating a new config file,by picking optimizer and the problem:
 
 ```bash
-python scripts/main.py +experiment=knapsack_ppo ++problem_dim=100 ++sa.outer_steps=500
+python scripts/main.py +experiment=knapsack_ppo training.optimizer=sgd training.n_epochs=200 training.batch_size=500
+
 ```
 
 - Use `sa.` prefix for parameters from `SAConfig`
@@ -74,8 +76,7 @@ python scripts/eval.py +experiment=knapsack_ppo
 ```
 
 To evaluate Knapsack with evolution strategies using AdamW:
-
-```bash
+'''bash
 !python scripts/eval.py +experiment=knapsack_es
 ```
 
@@ -85,10 +86,11 @@ This performs evaluation across multiple:
 
 ### 🗂 Results Output
 
-```bash
+```
 outputs/results/<problem>
 ```
 
+---
 
 ## 📈 Print and Aggregate Results
 
@@ -105,6 +107,14 @@ python scripts/print_results.py +experiment=knapsack_ppo
 This script summarizes results from multiple runs and outputs comparative tables.
 
 ---
+
+🔗 Colab Demonstration (Reference Only)
+
+A simplified Google Colab notebook is available for a quick overview of how this framework runs:
+
+[🔍 Colab Link (Overview Only)](https://colab.research.google.com/drive/1vAUU-Knoa-4_4CSGv2wueuLIU5W1Q-Bt?usp=sharing)
+
+Note: This Colab notebook does not include the entire implementation and is meant only for reference and demonstration purposes.
 
 ## 🧾 YAML Configuration Files
 
